@@ -1,6 +1,6 @@
 # BanksApi::Shinsei
 
-[BanksAPI](/davidstosik/banks_api-core) implementation for [Shinsei Bank](http://shinseibank.com) accounts.
+[BanksAPI](/davidstosik/banks_api) implementation for [Shinsei Bank](http://shinseibank.com) accounts.
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/banks_api/shinsei`. To experiment with that code, run `bin/console` for an interactive prompt.
 
