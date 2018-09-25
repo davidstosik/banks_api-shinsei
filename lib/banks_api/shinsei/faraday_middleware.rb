@@ -1,3 +1,5 @@
+require "banks_api/shinsei/js_parser"
+
 module BanksApi
   module Shinsei
     class FaradayMiddleware < Faraday::Middleware
@@ -11,6 +13,10 @@ module BanksApi
           # we'll use this instead.
           # https://docs.ruby-lang.org/ja/2.4.0/method/Kconv/m/toutf8.html
           response_env.body = NKF.nkf("-wxm0", response_env.body)
+
+          if response_env.response_headers["content-type"]&.match?(/text\/html/)
+            response_env.body = JsParser.data_for(response_env.body)
+          end
         end
       end
 

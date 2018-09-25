@@ -15,8 +15,7 @@ module BanksApi
 
       def fetch_accounts
         login
-        response = connection.post(nil, accounts_data)
-        data = JsParser.data_for(response.body)
+        data = connection.post(nil, accounts_data).body
 
         data["fldAccountID"].map.with_index do |account_id, index|
           Account.new(
@@ -54,8 +53,7 @@ module BanksApi
         private_constant :URL
 
         def login
-          response = connection.post(nil, login_phase1_data)
-          data = JsParser.data_for(response.body)
+          data = connection.post(nil, login_phase1_data).body
           @session_id = data["fldSessionID"]
           response = connection.post(nil, login_phase2_data(data))
           #data = JsParser.data_for(response.body)
