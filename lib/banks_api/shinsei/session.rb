@@ -37,8 +37,7 @@ module BanksApi
         fetch_accounts
         transactions_data(account: account, from: from, to: to, step: 1)
         post_data = transactions_data(account: account, from: from, to: to, step: 2)
-        response = connection.post(nil, post_data)
-        csv = response.body.lines[9..-1].join
+        csv = connection.post(nil, post_data).body.lines[9..-1].join
         headers = [:date, :ref_no, :description, :debit, :credit, :balance]
         CSV.parse(csv, col_sep: "\t", headers: headers).map do |csv_line|
           Transaction.from_csv_line(csv_line)
@@ -55,8 +54,7 @@ module BanksApi
         def login
           data = connection.post(nil, login_phase1_data).body
           @session_id = data["fldSessionID"]
-          response = connection.post(nil, login_phase2_data(data))
-          #data = JsParser.data_for(response.body)
+          connection.post(nil, login_phase2_data(data))
         end
 
         def logout
