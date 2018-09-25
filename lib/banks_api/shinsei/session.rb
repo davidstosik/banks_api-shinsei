@@ -2,7 +2,7 @@ require "csv"
 require "faraday"
 require "kconv"
 require "banks_api/shinsei/js_parser"
-require "banks_api/shinsei/account"
+require "banks_api/shinsei/bank_account"
 require "banks_api/shinsei/transaction"
 require "banks_api/shinsei/faraday_middleware"
 
@@ -18,7 +18,7 @@ module BanksApi
         data = connection.post(nil, accounts_data).body
 
         data["fldAccountID"].map.with_index do |account_id, index|
-          Account.new(
+          BankAccount.new(
             id: account_id,
             type: data["fldAccountType"][index],
             description: data["fldAccountDesc"][index],
@@ -40,7 +40,7 @@ module BanksApi
         csv = connection.post(nil, post_data).body.lines[9..-1].join
         headers = [:date, :ref_no, :description, :debit, :credit, :balance]
         CSV.parse(csv, col_sep: "\t", headers: headers).map do |csv_line|
-          Transaction.from_csv_line(csv_line)
+          Transaction.from_csv_line(csv_line, currency: account.currency)
         end
       end
 

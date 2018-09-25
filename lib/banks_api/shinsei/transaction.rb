@@ -1,26 +1,21 @@
 module BanksApi
   module Shinsei
-    class Transaction
-      attr_reader :date, :ref_no, :description, :amount
+    class Transaction < Transaction
+      attr_reader :ref_no
 
-      def initialize(date:, ref_no:, description:, amount:)
-        @date = date
+      def initialize(ref_no:, **other)
+        super(other)
         @ref_no = ref_no
-        @description = description
-        @amount = amount
       end
 
-      def self.from_csv_line(csv_line)
+      def self.from_csv_line(csv_line, currency:)
         new(
           date: Date.parse(csv_line[:date]),
           ref_no: csv_line[:ref_no],
           description: csv_line[:description],
-          amount: csv_line[:credit].to_i- csv_line[:debit].to_i # can both be non zero?
+          amount: csv_line[:credit].to_i - csv_line[:debit].to_i, # can both be non zero?
+          currency: currency
         )
-      end
-
-      def to_s
-        "#{date},#{ref_no},#{description},#{amount}"
       end
     end
   end
