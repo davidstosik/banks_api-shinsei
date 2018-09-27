@@ -6,7 +6,7 @@ module BanksApi
       def initialize(type:, base_balance:, session:, **other)
         super(other)
         @type = type
-        @base_balance = base_balance
+        @base_balance = Money.from_amount(base_balance, currency)
         @session = session
       end
 
