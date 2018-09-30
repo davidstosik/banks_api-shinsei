@@ -35,7 +35,8 @@ module BanksApi
       def fetch_transactions(account:, from:, to:)
         login
         fetch_accounts
-        transactions_data(account: account, from: from, to: to, step: 1)
+        post_data = transactions_data(account: account, from: from, to: to, step: 1)
+        connection.post(nil, post_data)
         post_data = transactions_data(account: account, from: from, to: to, step: 2)
         csv = connection.post(nil, post_data).body.lines[9..-1].join
         headers = [:date, :ref_no, :description, :debit, :credit, :balance]
