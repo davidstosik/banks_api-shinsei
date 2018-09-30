@@ -42,7 +42,7 @@ module BanksApi
         headers = [:date, :ref_no, :description, :debit, :credit, :balance]
         CSV.parse(csv, col_sep: "\t", headers: headers).map do |csv_line|
           Transaction.from_csv_line(csv_line, currency: account.currency)
-        end
+        end.reverse
       end
 
       private
