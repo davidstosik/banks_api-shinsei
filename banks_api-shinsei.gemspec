@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["david.stosik+git-noreply@gmail.com"]
 
   spec.summary       = %q{BanksAPI implementation for Shinsei Bank accounts}
-  spec.description   = %q{BanksAPI implementation for Shinsei Bank accounts}
+  spec.description   = %q{Fetch Shinsei Bank transactions via a standardized API}
   spec.homepage      = "https://github.com/davidstosik/banks_api-shinsei"
   spec.license       = "MIT"
 
